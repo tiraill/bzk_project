@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load bootstrap %}
+{% block head_title %}{% trans "Signup" %}{% endblock %}
+{% block extra_head %}
+<style type="text/css">
+      .login-block {
+        padding: 80px;
+      }
+
+      .form-signup {
+        max-width: 400px;
+        padding: 19px 29px 29px;
+        margin: 0 auto 20px;
+        background-color: #fff;
+        border: 1px solid #e5e5e5;
+        -webkit-border-radius: 5px;
+           -moz-border-radius: 5px;
+                border-radius: 5px;
+        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+           -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+                box-shadow: 0 1px 2px rgba(0,0,0,.05);
+      }
+      .form-signin .form-signin-heading,
+      .form-signin .checkbox {
+        margin-bottom: 10px;
+      }
+      .form-signin input[type="text"],
+      .form-signin input[type="password"] {
+        font-size: 16px;
+        height: auto;
+        margin-bottom: 15px;
+        padding: 7px 9px;
+      }
+
+      .social-btn {
+      padding: 0px 3px 0px 0px;
+      }
+
+      .layer-top {
+        padding:50px;
+        vertical-align: top;
+        background: #555 url('/static/img/street-marathon-1600-700.jpg') no-repeat;
+       }
+
+       .diviz-text {
+        padding: 50px;
+       }
+
+       .classh3 {
+        color: #fff;
+  font-size: 4em;
+  text-shadow:
+    0 0  5px #000,
+    0 0  10px #000,
+    0 0  15px #000,
+    0 0  20px #000
+       }
+    </style>
+{% endblock %}
+{% block content %}
+
+<div class="layer-top">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7 diviz-text">
+                <h1 class="classh3">Бег - это все, что тебе нужно</h1>
+            </div>
+            <div class="col-sm-8 col-md-5 hide-sm">
+                <div>
+                    <form class="form-signup" id="signup" method="post" action="">
+                        <br>
+                        {% include 'social_widget.html' %}
+                        <div style="text-align: center;">{% trans 'or' %}</div>
+                        {% csrf_token %}
+                        {{ signup_form|bootstrap }}
+                        {% if redirect_field_value %}
+                        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                        {% endif %}
+                        <button class="btn btn-success btn-block" type="submit">{% trans "Sign Up" %}</button>
+                        <br>
+                        <p><a href="{% url 'account_login' %}">Уже есть учётная запись? Войди здесь!</a></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<button type="button" class="btn btn-success" data-toggle="modal" data-target="#loginModal">Login</button>
+
+<div class="modal fade" role="dialog" id="loginModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Login</h3>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="form-group">
+            <form class="login" method="POST" action="">
+              {% csrf_token %}
+              {{ login_form.as_p }}
+              {% if redirect_field_value %}
+                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+              {% endif %}
+                <a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+                <button class="primaryAction" type="submit">{% trans "Sign In" %}</button>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

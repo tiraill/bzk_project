@@ -1,0 +1,57 @@
+{% block extra_head %}
+{% load static %}
+<link rel="stylesheet" href="{% static "bootstrap-4/css/bootstrap.css" %}">
+<link rel="stylesheet" href="{% static "font-awesome-4.7.0/css/font-awesome.min.css" %}">
+<link rel="stylesheet" href="{% static "bootstrap-4/css/bootstrap.min.css" %}">
+<link rel="stylesheet" href="{% static "css/social.css" %}">
+<style type="text/css">
+      .login-block {
+        padding: 80px;
+      }
+
+      .form-signup {
+        max-width: 400px;
+        padding: 19px 29px 29px;
+        margin: 0 auto 20px;
+        background-color: #fff;
+        border: 1px solid #e5e5e5;
+        -webkit-border-radius: 5px;
+           -moz-border-radius: 5px;
+                border-radius: 5px;
+        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+           -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+                box-shadow: 0 1px 2px rgba(0,0,0,.05);
+      }
+      .form-signin .form-signin-heading,
+      .form-signin .checkbox {
+        margin-bottom: 10px;
+      }
+      .form-signin input[type="text"],
+      .form-signin input[type="password"] {
+        font-size: 16px;
+        height: auto;
+        margin-bottom: 15px;
+        padding: 7px 9px;
+      }
+
+      .social-btn {
+      padding: 0px 3px 0px 0px;
+      }
+
+    </style>
+{% endblock %}
+{% load account socialaccount %}
+{% get_providers as socialaccount_providers %}
+{% if socialaccount_providers %}
+<div class="row" style="padding:0px 35px 0px 35px;">
+    {% load socialaccount %}
+    {% get_providers as socialaccount_providers %}
+    {% for provider in socialaccount_providers %}
+    <div class="col-md-2">
+        <a href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}"
+           title="Sign in {{provider.name}}"
+           class="btn btn-social-icon btn-{{provider.id}}"><span class="fa fa-{{provider.id}}"></span></a>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}

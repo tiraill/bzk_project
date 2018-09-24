@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load bootstrap %}
+{% block content %}
+<div class="container">
+    <h1>Profile</h1>
+    <form method="post" action="">
+      {% csrf_token %}
+      {{ user_form|bootstrap }}
+      {{ profile_form|bootstrap }}
+      <button class="btn btn-success btn-block" type="submit">Сохранить изменения</button>
+    </form>
+</div>
+{% endblock %}
